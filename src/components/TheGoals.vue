@@ -3,28 +3,27 @@
     <v-card
         class="mx-auto pa-2"
         rounded="lg">
-      <v-list rounded="lg"
-      >
+      <v-list rounded="lg">
         <v-list-subheader color="secondary">
           GOALS
         </v-list-subheader>
         <v-list-item
             v-for="goal in goals"
+            :key="goal"
             :link="true"
-            rounded="xl"
             color="primary"
-            :key="goal">
+            rounded="xl">
           List item {{ goal }}
         </v-list-item>
         <v-divider class="my-2 dialog"></v-divider>
         <v-list-item
-            @click="addNewGoal"
             :link="true"
+            color="grey-lighten-4"
             rounded="xl"
-            color="grey-lighten-4">
+            @click="goalStore.add()">
           <v-list-item-title
               class="d-flex justify-start align-content-center">
-            <v-icon color="primary" icon="mdi-plus" class="pr-2"></v-icon>
+            <v-icon class="pr-2" color="primary" icon="mdi-plus"></v-icon>
             Add
           </v-list-item-title>
         </v-list-item>
@@ -32,7 +31,9 @@
     </v-card>
   </div>
 </template>
+
 <script>
+import {useGoalStore} from "@/stores/GoalStore";
 
 export default {
   name: 'TheGoals',
@@ -45,18 +46,16 @@ export default {
         'Profile',
         'Updates',
       ],
-      dialogNewGoal: false
+      dialogNewGoal: false,
+      goalStore: useGoalStore()
     }
   },
-  methods: {
-    addNewGoal() {
-      this.$emit('add-goal')
-    }
-  }
+  methods: {}
 }
 </script>
+
 <style scoped>
-  .dialog {
-    --el-dialog-bg-color: #121212 !important;
-  }
+.dialog {
+  --el-dialog-bg-color: #121212 !important;
+}
 </style>

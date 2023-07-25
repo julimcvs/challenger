@@ -1,5 +1,4 @@
 <template>
-
   <v-card
       class="pa-5"
       min-height="auto"
@@ -16,87 +15,87 @@
             md="6">
           <v-text-field
               label="Name"
-              variant="outlined"
-              required></v-text-field>
+              required
+              variant="outlined"></v-text-field>
         </v-col>
         <v-col
             cols="12"
             md="6">
           <v-text-field
-              single-line
-              variant="outlined"
-              label="Number of days"
-              type="number"
               hint="Number of days"
-          persistent-hint></v-text-field>
+              label="Number of days"
+              persistent-hint
+              single-line
+              type="number"
+              variant="outlined"></v-text-field>
         </v-col>
       </v-row>
       <v-row justify="center">
         <v-col class="v-col-12 v-col-md-6">
           <v-row justify="center">
-
             <v-col
-            cols="12">
-
+                cols="12">
               <div class="d-flex align-center">
-              <v-select
-                  color="primary"
-                  variant="outlined"
-                  v-model="selectedInterval"
-                  @update:model-value="selectInterval"
-                  :items="hasRange ? ranges : intervals"
-                  hint="Interval (ranged or specific)"
-                  persistent-hint
-                  item-title="name"
-                  item-value="value">
-              </v-select>
-              <v-switch
-                  class="ml-5"
-                  color="primary"
-                  @click="toggleRange"
-                  v-model="hasRange"
-                  label="Range">
-              </v-switch>
+                <v-select
+                    v-model="selectedInterval"
+                    :items="hasRange ? ranges : intervals"
+                    color="primary"
+                    hint="Interval (ranged or specific)"
+                    item-title="name"
+                    item-value="value"
+                    persistent-hint
+                    variant="outlined"
+                    @update:model-value="selectInterval">
+                </v-select>
+                <v-switch
+                    v-model="hasRange"
+                    class="ml-5"
+                    color="primary"
+                    label="Range"
+                    @click="toggleRange">
+                </v-switch>
               </div>
             </v-col>
-
-
           </v-row>
         </v-col>
         <v-col class="v-col-12 v-col-md-6">
           <div
               v-if="hasRange">
             <a-range-picker
-                size="large"
                 v-model:value="selectedDate"
-                :picker="selectedInterval"/>
+                :picker="selectedInterval"
+                size="large"/>
           </div>
           <div v-else>
             <a-date-picker
-                size="large"
                 v-model="selectedDate"
                 :picker="selectedInterval"
+                size="large"
             />
           </div>
         </v-col>
       </v-row>
     </v-card-text>
     <v-card-actions>
-    <v-spacer></v-spacer>
-        <v-btn
-            color="primary"
-            variant="flat">
-          Save
-        </v-btn>
-        <v-btn
-            color="primary"
-            variant="outlined">
-          Cancel
-        </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn
+          color="primary"
+          variant="flat">
+        Save
+      </v-btn>
+      <v-btn
+          color="primary"
+          variant="outlined"
+          @click="goalStore.cancel">
+        Cancel
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
+
 <script>
+import {useGoalStore} from "@/stores/GoalStore";
+
 export default {
   name: "NewGoal",
 
@@ -137,7 +136,8 @@ export default {
           name: 'Year',
           value: 'year'
         }
-      ]
+      ],
+      goalStore: useGoalStore()
     }
   },
   methods: {
@@ -148,15 +148,17 @@ export default {
     },
     selectInterval() {
       this.selectedDate = ''
-    }
+    },
   }
 }
 </script>
+
 <style scoped>
 .ant-picker-large {
   padding: 15px 11px 15px;
   width: 100%;
 }
+
 .ant-picker {
   color: rgb(255, 255, 255);
   border: 1px solid #696969;

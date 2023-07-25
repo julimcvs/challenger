@@ -1,13 +1,17 @@
 <template>
-  <v-container>
+  <div>
 
-  </v-container>
+  </div>
 </template>
+
 <script>
+import {useGoalStore} from "@/stores/GoalStore";
+
 export default {
   name: "GoalDetails",
   data() {
     return {
+      goalStore: useGoalStore()
     }
   }
 }

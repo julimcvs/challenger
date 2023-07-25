@@ -27,8 +27,8 @@
 
         <div>
           <v-btn
-          @click="toggleTheme"
-          :icon="darkTheme ? 'mdi-weather-night' : 'mdi-weather-sunny'">
+              :icon="darkTheme ? 'mdi-weather-night' : 'mdi-weather-sunny'"
+              @click="toggleTheme">
           </v-btn>
         </div>
       </v-container>
@@ -40,18 +40,20 @@
           <v-col class="v-col-12 v-col-md-3">
             <v-row>
               <v-col cols="12">
-            <TheGoals @add-goal="addNewGoal"></TheGoals>
-              </v-col>
-              <v-col cols="12">
-
+                <TheGoals></TheGoals>
               </v-col>
             </v-row>
           </v-col>
           <v-col class="v-col-12 v-col-md">
-              <div  v-if="addGoal">
-                <NewGoal></NewGoal>
-              </div>
-              <GoalDetails v-else></GoalDetails>
+            <div v-if="goalStore.addGoal">
+              <NewGoal></NewGoal>
+            </div>
+            <div v-else-if="goalStore.showDetails">
+              <GoalDetails></GoalDetails>
+            </div>
+            <div v-else>
+              <TheHome></TheHome>
+            </div>
           </v-col>
         </v-row>
         <v-row>
@@ -62,16 +64,20 @@
     </v-main>
   </v-app>
 </template>
+
 <script>
 import {useTheme} from "vuetify";
 import TheGoals from "@/components/TheGoals.vue";
 import GoalDetails from "@/components/GoalDetails.vue";
 import NewGoal from "@/components/NewGoal.vue";
 import {theme} from "ant-design-vue";
+import {useGoalStore} from '@/stores/GoalStore'
+import {useThemeStore} from '@/stores/ThemeStore'
+import TheHome from "@/components/TheHome.vue";
 
 export default {
   name: 'TheMain',
-  components: {NewGoal, GoalDetails, TheGoals},
+  components: {TheHome, NewGoal, GoalDetails, TheGoals},
   computed: {
     theme() {
       return theme
@@ -86,25 +92,19 @@ export default {
         'Updates',
       ],
       vuetifyTheme: useTheme(),
-      darkTheme: true,
-      addGoal: false,
       primaryColor: '#4caf50',
-      algorithm: theme.darkAlgorithm
+      algorithm: theme.darkAlgorithm,
+      goalStore: useGoalStore(),
+      themeStore: useThemeStore(),
     }
   },
   methods: {
-    addNewGoal() {
-        this.addGoal = true;
-    },
     toggleTheme() {
       this.vuetifyTheme.global.name = this.vuetifyTheme.global.current.dark ? 'customLightTheme' : 'customDarkTheme'
-      this.darkTheme = !this.darkTheme;
-      this.algorithm = this.darkTheme ? theme.darkAlgorithm : theme.defaultAlgorithm;
-      this.primaryColor = this.darkTheme ? '#4caf50' : '#00ccff';
+      this.themeStore.toggleDarkTheme();
+      this.algorithm = this.themeStore.darkTheme ? theme.darkAlgorithm : theme.defaultAlgorithm;
+      this.primaryColor = this.themeStore.darkTheme ? '#4caf50' : '#00ccff';
     }
   }
 }
 </script>
-<style>
-
-</style>

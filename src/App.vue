@@ -1,5 +1,6 @@
 <script>
 import TheMain from "@/components/TheMain.vue";
+
 export default {
   components: {TheMain}
 
@@ -10,12 +11,11 @@ export default {
 <template>
   <div id="main">
     <TheMain></TheMain>
-
   </div>
 </template>
 
 <style>
-  #main {
-    width: 100vw;
-  }
+#main {
+  width: 100vw;
+}
 </style>

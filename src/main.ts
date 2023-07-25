@@ -3,7 +3,6 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import App from './App.vue'
 import router from './router'
 // Vuetify
 import 'vuetify/styles'
@@ -14,6 +13,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import 'ant-design-vue/dist/reset.css';
 import Antd from 'ant-design-vue';
+import App from "@/App.vue";
 
 const vuetify = createVuetify({
     components,
@@ -31,7 +31,7 @@ const vuetify = createVuetify({
             customDarkTheme: {
                 dark: true,
                 colors: {
-                    background: "#3f3f3f",
+                    background: "#2b2d30",
                     surface: "#121212",
                     primary: "#4caf50",
                     secondary: "#f77f00",
